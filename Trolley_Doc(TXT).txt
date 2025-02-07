@@ -1,0 +1,64 @@
+Trolley Detection Project Documentation:
+
+1. Introduction:
+
+   -This project focuses on detecting trolleys using the YOLO (You Only Look Once) object detection model. The model has been trained to identify and classify trolleys in images, which could be useful in retail or logistics applications.
+
+2. Dataset:
+
+   -The dataset used in this project was obtained from Roboflow Universe, where it was further augmented using the platform to enhance the variety and robustness of the training data. The annotated dataset contains images labeled with trolleys, ensuring that the model learns to distinguish them from other objects in the environment.
+
+Augmentation Details:
+
+- Noise: 1.8% noise added to the images.
+- Hue: Adjusted by 11 degrees to vary the color balance.
+- Rotation: Images were rotated by up to 15 degrees.
+- Blur: A blur effect with a pixel radius of 2.5 was applied to simulate various image quality conditions.
+
+3. Model:
+
+   -The model used for this project is YOLOv8, which is well-suited for real-time object detection tasks. YOLOv8 provides high accuracy and speed, making it ideal for deployment in scenarios where quick decisions are required.
+
+Hyperparameters:
+- data: /kaggle/input/trolley-dataset/data.yaml
+- epochs: 100
+- batch size: 16
+- image size: 320
+- device: 0 (GPU T4 x2 on Kaggle)
+- AMP: False (Automatic Mixed Precision)
+
+4. Training:
+
+   -The model was trained using two GPUs (T4 x2) on Kaggle to speed up the training process. The training was conducted for 100 epochs with a batch size of 16 and an image size of 320. The model was trained on a GPU to leverage faster computation during training.
+
+5. Evaluation:
+
+(Best.pt):
+- mAP@0.5: 95.57%
+- mAP@0.5:0.95: 84.6%
+- Precision: 94.8%.
+- Recall: 90.4%
+
+(Overall):
+- Confusion Matrix: 529 correct, 45 false positives, 43 false negatives
+- F1-Confidence Curve: High F1-score, drop at extreme confidence values
+- Precision-Confidence Curve: Precision peaks near 1 at high confidence
+- Precision-Recall Curve: Strong balance, drop-off at extreme recall levels
+- Recall-Confidence Curve: Stable recall, steep decline at high confidence
+
+6. Deployment:
+
+   -The trained YOLOv8 model (best.pt) can be deployed for trolley detection in two ways:
+
+1. Image-Based Inference:
+   - The model takes an image as input and detects trolleys in the image.
+   - The output is an annotated image with bounding boxes around detected trolleys.
+
+2. Live Camera Testing:
+   - The trained model can be used for real-time detection via a webcam or external camera.
+   - This allows real-time monitoring of trolleys in different environments, helping in applications like automated tracking and surveillance.
+
+Conclusion:
+
+   -The model performs well with strong precision and recall but can be optimized by fine-tuning the confidence threshold and reducing false positives/negatives for better real-world performance.
+
